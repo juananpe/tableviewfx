@@ -1,6 +1,6 @@
 package ehu.isad;
 
-import ehu.isad.controller.ui.StudentsController;
+import ehu.isad.controller.ui.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,9 +13,13 @@ import java.util.ResourceBundle;
 
 public class Main extends Application {
 
-  private Parent mainUI;
+  private Parent mainUI, herrialdeakUI, bozkaketaUI, top3UI;
   private Stage stage;
-  private StudentsController studentsController;
+  private MainController mainController;
+  private HerrialdeakController herrialdeakController;
+  private BozkaketaController bozkaketaController;
+  private TopController top3Controller;
+
 
   @Override
   public void start(Stage primaryStage) throws Exception {
@@ -23,17 +27,32 @@ public class Main extends Application {
     stage = primaryStage;
     pantailakKargatu();
 
-    stage.setTitle("Taula Demo");
+    stage.setTitle("Eurobisioa");
     stage.setScene(new Scene(mainUI, 650, 475));
     stage.show();
   }
 
   private void pantailakKargatu() throws IOException {
 
-    FXMLLoader loaderKautotu = new FXMLLoader(getClass().getResource("/tableview.fxml"));
-    mainUI = (Parent) loaderKautotu.load();
-    studentsController = loaderKautotu.getController();
-    studentsController.setMainApp(this);
+    FXMLLoader loaderHasiera = new FXMLLoader(getClass().getResource("/main.fxml"));
+    mainUI = (Parent) loaderHasiera.load();
+    mainController = loaderHasiera.getController();
+    mainController.setMainApp(this);
+
+    FXMLLoader herrialdeakLoader = new FXMLLoader(getClass().getResource("/herrialdeak.fxml"));
+    herrialdeakUI = (Parent) herrialdeakLoader.load();
+    herrialdeakController = herrialdeakLoader.getController();
+    herrialdeakController.setMainApp(this);
+
+    FXMLLoader bozkaketaLoader = new FXMLLoader(getClass().getResource("/bozkaketa.fxml"));
+    bozkaketaUI = (Parent) bozkaketaLoader.load();
+    bozkaketaController = bozkaketaLoader.getController();
+    bozkaketaController.setMainApp(this);
+
+    FXMLLoader top3Loader = new FXMLLoader(getClass().getResource("/top3.fxml"));
+    top3UI = (Parent) top3Loader.load();
+    top3Controller = top3Loader.getController();
+    top3Controller.setMainApp(this);
 
   }
 
@@ -42,8 +61,21 @@ public class Main extends Application {
     launch(args);
   }
 
-  public void mainErakutsi() {
-    stage.setScene(new Scene(mainUI));
+  public void herrialdeaHautatu() {
+    stage.setScene(new Scene(herrialdeakUI));
     stage.show();
   }
+
+  public void bozkaketaBistaratu() {
+    stage.setScene(new Scene(bozkaketaUI));
+    stage.show();
+  }
+
+  public void top3Bistaratu() {
+    stage.setScene(new Scene(top3UI));
+    stage.show();
+  }
+
+
+
 }
